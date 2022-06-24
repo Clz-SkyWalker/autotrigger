@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:7.0.2
+    volumes:
+      - ./redis/redis.conf:/etc/redis/redis.conf
+    networks:
+      - trigger
+    ports:
+      - "63790:6379"
+    privileged: true
+  Etcd:
+    image: 'bitnami/etcd:3.5'
+    volumes:
+      - /etcd/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+    networks:
+      - trigger
+
+networks:
+  trigger:

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package log;
+
+
+option go_package = "./log";
+
+//import "D:\\codeProject\\go\autotrigger\\common\\rpc\\common.proto";
+
+message MyErrModel{
+  enum LogLevel {
+    DebugLevel = 0;
+    InfoLevel = 1;
+    WarnLevel = 2;
+    ErrorLevel = 3;
+    PanicLevel = 4;
+  }
+  int32 Code = 1; // 编号
+  LogLevel level = 2; // 日志等级
+  string message = 3; // 日志信息
+  string errMeg = 4; // 具体错误信息
+  map<string, string>params = 5; // 参数
+  string stack = 6;// 文件位置
+  string methodName = 7;// 方法名
+}
+
+
+
+service Log{
+  // 发送日志
+  rpc sendLog(MyErrModel) returns (MyErrModel);
+}
