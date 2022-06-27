@@ -2,7 +2,7 @@ package svc
 
 import (
 	"autotrigger/log/rpc/internal/config"
-	"autotrigger/log/rpc/types/log"
+	"autotrigger/log/rpc/types/proto"
 	"go.uber.org/zap"
 )
 
@@ -32,14 +32,14 @@ type LoggerStruct struct {
 //  @receiver l
 //  @param in
 //
-func (l *LoggerStruct) DealLogInfo(in *log.MyErrModel) {
+func (l *LoggerStruct) DealLogInfo(in *proto.MyErrModel) {
 	switch in.Level {
-	case log.MyErrStruct_DebugLevel:
+	case proto.MyErrModel_DebugLevel:
 		l.Logger.Debugf("code:%d,msg:%s,params:%s", in.Code, in.Message, in.Params)
-	case log.MyErrStruct_InfoLevel:
+	case proto.MyErrModel_InfoLevel:
 		l.Logger.Infof("code:%d,msg:%s,params:%s", in.Code, in.Message, in.Params)
-	case log.MyErrStruct_ErrorLevel:
+	case proto.MyErrModel_ErrorLevel:
 		l.Logger.Errorf("code:%d,msg:%s,params:%s,file:%s,method:%s", in.Code, in.Message, in.Params, in.Stack, in.MethodName)
-	case log.MyErrStruct_PanicLevel:
+	case proto.MyErrModel_PanicLevel:
 	}
 }

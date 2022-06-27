@@ -6,18 +6,19 @@ package log
 import (
 	"context"
 
-	"autotrigger/log/rpc/types/log"
+	"autotrigger/log/rpc/types/proto"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	MyErrStruct = log.MyErrModel
+	EmptyModel = proto.EmptyModel
+	MyErrModel = proto.MyErrModel
 
 	Log interface {
 		//  发送日志
-		SendLog(ctx context.Context, in *MyErrStruct, opts ...grpc.CallOption) (*MyErrStruct, error)
+		SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*EmptyModel, error)
 	}
 
 	defaultLog struct {
@@ -32,7 +33,7 @@ func NewLog(cli zrpc.Client) Log {
 }
 
 //  发送日志
-func (m *defaultLog) SendLog(ctx context.Context, in *MyErrStruct, opts ...grpc.CallOption) (*MyErrStruct, error) {
-	client := log.NewLogClient(m.cli.Conn())
+func (m *defaultLog) SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*EmptyModel, error) {
+	client := proto.NewLogClient(m.cli.Conn())
 	return client.SendLog(ctx, in, opts...)
 }

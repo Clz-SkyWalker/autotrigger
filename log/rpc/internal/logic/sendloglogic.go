@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"autotrigger/log/rpc/internal/svc"
-	"autotrigger/log/rpc/types/log"
+	"autotrigger/log/rpc/types/proto"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +24,7 @@ func NewSendLogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SendLogLo
 }
 
 //  发送日志
-func (l *SendLogLogic) SendLog(in *log.MyErrModel) (*log.MyErrModel, error) {
+func (l *SendLogLogic) SendLog(in *proto.MyErrModel) (*proto.EmptyModel, error) {
 	l.svcCtx.Logger.DealLogInfo(in)
-	return &log.MyErrModel{}, nil
+	return &proto.EmptyModel{}, nil
 }

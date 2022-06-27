@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package log;
 
+option go_package = "./proto";
 
-option go_package = "./log";
-
-//import "D:\\codeProject\\go\autotrigger\\common\\rpc\\common.proto";
+message EmptyModel{
+}
 
 message MyErrModel{
   enum LogLevel {
@@ -24,9 +24,7 @@ message MyErrModel{
   string methodName = 7;// 方法名
 }
 
-
-
 service Log{
   // 发送日志
-  rpc sendLog(MyErrModel) returns (MyErrModel);
+  rpc sendLog(MyErrModel) returns(EmptyModel);
 }

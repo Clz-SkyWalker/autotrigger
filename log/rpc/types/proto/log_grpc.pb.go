@@ -4,7 +4,7 @@
 // - protoc             v3.19.4
 // source: log.proto
 
-package log
+package proto
 
 import (
 	context "context"
@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LogClient interface {
 	// 发送日志
-	SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*MyErrModel, error)
+	SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*EmptyModel, error)
 }
 
 type logClient struct {
@@ -34,8 +34,8 @@ func NewLogClient(cc grpc.ClientConnInterface) LogClient {
 	return &logClient{cc}
 }
 
-func (c *logClient) SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*MyErrModel, error) {
-	out := new(MyErrModel)
+func (c *logClient) SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.CallOption) (*EmptyModel, error) {
+	out := new(EmptyModel)
 	err := c.cc.Invoke(ctx, "/log.Log/sendLog", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (c *logClient) SendLog(ctx context.Context, in *MyErrModel, opts ...grpc.Ca
 // for forward compatibility
 type LogServer interface {
 	// 发送日志
-	SendLog(context.Context, *MyErrModel) (*MyErrModel, error)
+	SendLog(context.Context, *MyErrModel) (*EmptyModel, error)
 	mustEmbedUnimplementedLogServer()
 }
 
@@ -56,7 +56,7 @@ type LogServer interface {
 type UnimplementedLogServer struct {
 }
 
-func (UnimplementedLogServer) SendLog(context.Context, *MyErrModel) (*MyErrModel, error) {
+func (UnimplementedLogServer) SendLog(context.Context, *MyErrModel) (*EmptyModel, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendLog not implemented")
 }
 func (UnimplementedLogServer) mustEmbedUnimplementedLogServer() {}

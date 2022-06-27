@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package common;
-
-message ResponseModel {
-  int32 code =1;
-  string message=2;
-}

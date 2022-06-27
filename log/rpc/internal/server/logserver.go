@@ -8,12 +8,12 @@ import (
 
 	"autotrigger/log/rpc/internal/logic"
 	"autotrigger/log/rpc/internal/svc"
-	"autotrigger/log/rpc/types/log"
+	"autotrigger/log/rpc/types/proto"
 )
 
 type LogServer struct {
 	svcCtx *svc.ServiceContext
-	log.UnimplementedLogServer
+	proto.UnimplementedLogServer
 }
 
 func NewLogServer(svcCtx *svc.ServiceContext) *LogServer {
@@ -23,7 +23,7 @@ func NewLogServer(svcCtx *svc.ServiceContext) *LogServer {
 }
 
 //  发送日志
-func (s *LogServer) SendLog(ctx context.Context, in *log.MyErrModel) (*log.MyErrModel, error) {
+func (s *LogServer) SendLog(ctx context.Context, in *proto.MyErrModel) (*proto.EmptyModel, error) {
 	l := logic.NewSendLogLogic(ctx, s.svcCtx)
 	return l.SendLog(in)
 }
